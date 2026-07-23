@@ -1,7 +1,15 @@
-import { categories, opportunities, towns } from "../../lib/opportunities";
+import { getOpportunities } from "../../lib/data";
 import { OpportunityBrowser } from "./OpportunityBrowser";
 
-export default function OpportunitiesPage() {
+export default async function OpportunitiesPage() {
+  const opportunities = await getOpportunities();
+  const towns = Array.from(
+    new Set(opportunities.map((opportunity) => opportunity.town))
+  ).sort();
+  const categories = Array.from(
+    new Set(opportunities.map((opportunity) => opportunity.category))
+  ).sort();
+
   return (
     <main className="mx-auto max-w-6xl px-5 py-10 sm:px-6 lg:px-8">
       <section className="mb-8">

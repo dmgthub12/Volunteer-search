@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getOpportunity, opportunities } from "../../../lib/opportunities";
+import { getOpportunity } from "../../../lib/data";
+import { opportunities } from "../../../lib/opportunities";
 
 export function generateStaticParams() {
   return opportunities.map((opportunity) => ({ id: opportunity.id }));
@@ -25,7 +26,9 @@ function DetailSection({ title, items }: { title: string; items: string[] }) {
   );
 }
 
-function actionLabel(opportunity: NonNullable<ReturnType<typeof getOpportunity>>) {
+function actionLabel(
+  opportunity: NonNullable<Awaited<ReturnType<typeof getOpportunity>>>
+) {
   if (opportunity.applicationUrl?.toLowerCase().endsWith(".pdf")) {
     return "Download Application";
   }
@@ -40,7 +43,7 @@ export default async function OpportunityDetailsPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const opportunity = getOpportunity(id);
+  const opportunity = await getOpportunity(id);
 
   if (!opportunity) {
     notFound();

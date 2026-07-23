@@ -1,7 +1,9 @@
 import Link from "next/link";
-import { opportunities } from "../lib/opportunities";
+import { getOpportunities } from "../lib/data";
 
-export default function Home() {
+export default async function Home() {
+  const opportunities = await getOpportunities();
+
   return (
     <main>
       <section className="mx-auto grid min-h-[calc(100vh-86px)] w-full max-w-6xl items-center gap-10 px-5 py-12 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:px-8">
