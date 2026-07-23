@@ -5,14 +5,16 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        primary: "#1E3A5F",
-        accent: "#A8D5BA",
+        primary: "#1F3B68",
+        accent: "#6FCF97",
+        mint: "#EAF8F1",
         background: "#FFFFFF",
         lightBackground: "#F7F9FC",
         text: "#1F2937"
       },
       boxShadow: {
-        soft: "0 18px 45px rgba(30, 58, 95, 0.1)"
+        soft: "0 18px 45px rgba(31, 59, 104, 0.09)",
+        lift: "0 22px 55px rgba(31, 59, 104, 0.13)"
       }
     }
   },

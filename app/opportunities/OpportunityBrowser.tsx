@@ -1,5 +1,15 @@
 "use client";
 
+import {
+  ArrowRight,
+  CalendarDays,
+  Clock3,
+  MapPin,
+  Search,
+  Tag,
+  UserRound,
+  X
+} from "lucide-react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import type { VolunteerOpportunity } from "../../lib/opportunities";
@@ -109,12 +119,34 @@ export function OpportunityBrowser({
     setFilters(emptyFilters);
   }
 
+  function usefulTags(opportunity: VolunteerOpportunity) {
+    const tags = [
+      opportunity.teenFriendly ? "Teen Friendly" : null,
+      opportunity.weekend ? "Weekend" : null,
+      opportunity.duration.includes("One-time") ? "One-Time" : null,
+      opportunity.duration.includes("Ongoing") ? "Ongoing" : null,
+      opportunity.needsVerification ? "Needs Verification" : null
+    ].filter(Boolean) as string[];
+
+    return Array.from(new Set([...tags, ...opportunity.tags])).slice(0, 5);
+  }
+
   return (
     <div className="grid gap-6 lg:grid-cols-[320px_1fr]">
-      <aside className="h-fit rounded-2xl border border-slate-200 bg-white p-5 shadow-soft">
+      <aside className="soft-card h-fit p-5 lg:sticky lg:top-28">
+        <div className="mb-5">
+          <p className="text-lg font-bold text-primary">Filters</p>
+          <p className="mt-1 text-sm text-slate-500">
+            Refine the list without losing your place.
+          </p>
+        </div>
+
         <div className="space-y-4">
           <label className="field-label">
-            Town
+            <span className="flex items-center gap-2">
+              <MapPin className="h-4 w-4 text-accent" />
+              Town
+            </span>
             <select
               className="field-control"
               value={filters.town}
@@ -130,7 +162,10 @@ export function OpportunityBrowser({
           </label>
 
           <label className="field-label">
-            Category
+            <span className="flex items-center gap-2">
+              <Tag className="h-4 w-4 text-accent" />
+              Category
+            </span>
             <select
               className="field-control"
               value={filters.category}
@@ -146,7 +181,10 @@ export function OpportunityBrowser({
           </label>
 
           <label className="field-label">
-            Minimum age
+            <span className="flex items-center gap-2">
+              <UserRound className="h-4 w-4 text-accent" />
+              Minimum Age
+            </span>
             <select
               className="field-control"
               value={filters.minimumAge}
@@ -169,6 +207,7 @@ export function OpportunityBrowser({
                 updateFilter("teenFriendly", event.target.checked)
               }
             />
+            <UserRound className="h-4 w-4 text-accent" />
             Teen friendly
           </label>
 
@@ -178,11 +217,15 @@ export function OpportunityBrowser({
               type="checkbox"
               onChange={(event) => updateFilter("weekend", event.target.checked)}
             />
+            <CalendarDays className="h-4 w-4 text-accent" />
             Weekend
           </label>
 
           <label className="field-label">
-            One-time or ongoing
+            <span className="flex items-center gap-2">
+              <Clock3 className="h-4 w-4 text-accent" />
+              Commitment
+            </span>
             <select
               className="field-control"
               value={filters.duration}
@@ -199,24 +242,27 @@ export function OpportunityBrowser({
       </aside>
 
       <section>
-        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-soft sm:p-5">
+        <div className="soft-card p-4 sm:p-5">
           <label className="sr-only" htmlFor="opportunity-search">
             Search volunteer opportunities, towns, or categories
           </label>
-          <input
-            className="w-full rounded-xl border border-slate-200 bg-lightBackground px-5 py-4 text-base text-slate-900 outline-none ring-primary/20 placeholder:text-slate-400 focus:border-primary focus:ring-4"
-            id="opportunity-search"
-            placeholder="Search volunteer opportunities, towns, or categories"
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-          />
+          <div className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 shadow-sm ring-accent/20 transition focus-within:border-accent focus-within:ring-4">
+            <Search className="h-5 w-5 shrink-0 text-slate-400" />
+            <input
+              className="min-h-14 w-full bg-transparent text-base text-slate-900 outline-none placeholder:text-slate-400"
+              id="opportunity-search"
+              placeholder="Search volunteer opportunities, towns, or categories"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+            />
+          </div>
         </div>
 
         {hasFilters ? (
           <div className="mt-4 flex flex-wrap items-center gap-2">
             {query.trim() ? (
               <button className="filter-chip" type="button" onClick={() => setQuery("")}>
-                Search: {query} <span aria-hidden="true">x</span>
+                Search: {query} <X className="h-3.5 w-3.5" />
               </button>
             ) : null}
             {activeFilters.map((filter) => (
@@ -226,7 +272,7 @@ export function OpportunityBrowser({
                 type="button"
                 onClick={() => removeFilter(filter.key)}
               >
-                {filter.label} <span aria-hidden="true">x</span>
+                {filter.label} <X className="h-3.5 w-3.5" />
               </button>
             ))}
             <button className="clear-button" type="button" onClick={clearFilters}>
@@ -247,32 +293,45 @@ export function OpportunityBrowser({
           ) : (
             filteredOpportunities.map((opportunity) => (
               <Link
-                className="group block rounded-2xl border border-slate-200 bg-white p-5 shadow-soft transition hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-lg"
+                className="group block rounded-2xl border border-slate-200/80 bg-white p-5 shadow-soft transition duration-200 hover:-translate-y-0.5 hover:border-accent/60 hover:shadow-lift"
                 href={`/opportunities/${opportunity.id}`}
                 key={opportunity.id}
               >
                 <article className="grid gap-4 sm:grid-cols-[1fr_auto] sm:items-center">
                   <div>
-                    <h2 className="text-xl font-bold text-primary">
-                      {opportunity.organization}
-                    </h2>
-                    <p className="mt-1 text-sm font-semibold text-slate-500">
-                      {opportunity.town} &bull; {opportunity.category}
+                    <div className="flex flex-wrap items-center gap-2">
+                      <h2 className="text-xl font-bold text-primary">
+                        {opportunity.organization}
+                      </h2>
+                      {opportunity.needsVerification ? (
+                        <span className="rounded-full bg-amber-50 px-2.5 py-1 text-xs font-bold text-amber-700">
+                          Needs verification
+                        </span>
+                      ) : null}
+                    </div>
+                    <p className="mt-2 flex flex-wrap items-center gap-2 text-sm font-semibold text-slate-500">
+                      <span className="inline-flex items-center gap-1">
+                        <MapPin className="h-4 w-4" />
+                        {opportunity.town}
+                      </span>
+                      <span>&bull;</span>
+                      <span>{opportunity.category}</span>
                     </p>
                     <p className="mt-3 leading-7 text-slate-700">
                       {opportunity.description}
                     </p>
                     <div className="mt-4 flex flex-wrap gap-2">
                       <span className="meta-pill">{opportunity.ageDisplay}</span>
-                      {opportunity.tags.slice(0, 4).map((tag) => (
+                      {usefulTags(opportunity).map((tag) => (
                         <span className="meta-pill" key={tag}>
                           {tag}
                         </span>
                       ))}
                     </div>
                   </div>
-                  <span className="inline-flex font-bold text-primary group-hover:underline">
-                    View Details &rarr;
+                  <span className="inline-flex items-center gap-2 font-bold text-primary">
+                    View Details
+                    <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
                   </span>
                 </article>
               </Link>

@@ -15,16 +15,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <header className="border-b border-slate-200 bg-white">
+        <header className="sticky top-0 z-30 border-b border-slate-200/70 bg-white/85 backdrop-blur">
           <nav className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-5 sm:px-6 lg:px-8">
             <a className="text-lg font-bold text-primary" href="/">
               Bergen Volunteer Connect
             </a>
-            <div className="flex items-center gap-4 text-sm font-semibold text-slate-600">
-              <a className="hover:text-primary" href="/opportunities">
+            <div className="flex items-center gap-2 text-sm font-semibold text-slate-600">
+              <a className="rounded-full px-3 py-2 hover:bg-mint hover:text-primary" href="/opportunities">
                 Opportunities
               </a>
-              <a className="hover:text-primary" href="/about">
+              <a className="rounded-full px-3 py-2 hover:bg-mint hover:text-primary" href="/about">
                 About
               </a>
             </div>
