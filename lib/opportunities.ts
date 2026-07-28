@@ -116,7 +116,7 @@ export const opportunities: VolunteerOpportunity[] = [
     category: "Library",
     description:
       "Assist librarians with children's programs, summer reading activities, organizing materials, setting up events, and other library projects while earning community service hours. Volunteer spots are offered periodically and may fill quickly.",
-    ageDisplay: "Young adults, 15-18",
+    ageDisplay: "Ages 15-18",
     minimumAge: 15,
     requirements: [],
     schedule: ["Offered periodically", "Volunteer spots may fill quickly"],
@@ -128,7 +128,7 @@ export const opportunities: VolunteerOpportunity[] = [
     weekend: false,
     duration: "Contact organization",
     needsVerification: false,
-    tags: ["Ages 15-18", "Young adults", "Periodic"]
+    tags: ["Ages 15-18", "Periodic"]
   },
   {
     id: "closter-environmental-commission",
@@ -137,7 +137,7 @@ export const opportunities: VolunteerOpportunity[] = [
     category: "Environment",
     description:
       "Participate in environmental initiatives, community cleanups, tree planting, educational events, and sustainability projects throughout the borough.",
-    ageDisplay: "Adult and student volunteers, all ages",
+    ageDisplay: "All ages; students and adults",
     minimumAge: null,
     requirements: [],
     schedule: ["One-time", "Ongoing", "Weekend"],
@@ -323,7 +323,7 @@ export const opportunities: VolunteerOpportunity[] = [
     category: "Library",
     description:
       "Speak to the library director or children's librarian about opportunities.",
-    ageDisplay: "From middle schoolers to adults",
+    ageDisplay: "Age varies; middle school students through adults",
     minimumAge: null,
     requirements: ["Speak to the library director or children's librarian"],
     schedule: ["Contact organization"],
@@ -343,7 +343,7 @@ export const opportunities: VolunteerOpportunity[] = [
     category: "Civic",
     description:
       "Serve on town committees or assist with borough initiatives involving recreation, environmental projects, planning, and other community programs.",
-    ageDisplay: "Adults",
+    ageDisplay: "Age 18+",
     minimumAge: 18,
     requirements: [],
     schedule: ["Contact organization"],
@@ -354,7 +354,7 @@ export const opportunities: VolunteerOpportunity[] = [
     weekend: false,
     duration: "Contact organization",
     needsVerification: false,
-    tags: ["Adults", "Boards", "Committees"]
+    tags: ["Age 18+", "Boards", "Committees"]
   },
   {
     id: "haworth-police-auxiliary",
@@ -363,7 +363,7 @@ export const opportunities: VolunteerOpportunity[] = [
     category: "Public Safety",
     description:
       "Contact them to volunteer with the Haworth Police Auxiliary.",
-    ageDisplay: "Adults",
+    ageDisplay: "Age 18+",
     minimumAge: 18,
     requirements: ["Contact them to volunteer"],
     schedule: ["Contact organization"],
@@ -375,7 +375,7 @@ export const opportunities: VolunteerOpportunity[] = [
     weekend: false,
     duration: "Contact organization",
     needsVerification: true,
-    tags: ["Adults", "Contact organization"]
+    tags: ["Age 18+", "Contact organization"]
   },
   {
     id: "sacred-heart-church",
@@ -425,7 +425,7 @@ export const opportunities: VolunteerOpportunity[] = [
     category: "Healthcare",
     description:
       "Train to become an EMT or support the corps through auxiliary and community service roles. Free training is available for eligible volunteers.",
-    ageDisplay: "Age varies, students and adults can volunteer",
+    ageDisplay: "Age varies; students and adults can volunteer",
     minimumAge: null,
     requirements: [],
     schedule: ["Contact organization"],
@@ -436,7 +436,7 @@ export const opportunities: VolunteerOpportunity[] = [
     weekend: false,
     duration: "Contact organization",
     needsVerification: false,
-    tags: ["Age varies", "Students", "Adults", "Training"]
+    tags: ["Age varies", "Students", "Training"]
   },
   {
     id: "dumont-volunteer-fire-department",
@@ -445,7 +445,7 @@ export const opportunities: VolunteerOpportunity[] = [
     category: "Public Safety",
     description:
       "Volunteer firefighters help protect the community through emergency response, training, fire prevention, and public education.",
-    ageDisplay: "Unclear what age; most likely adult",
+    ageDisplay: "Age varies",
     minimumAge: null,
     requirements: ["Fill out form to join"],
     schedule: ["Contact organization"],
@@ -465,7 +465,7 @@ export const opportunities: VolunteerOpportunity[] = [
     category: "Social Services",
     description:
       "Help with seasonal food drives, holiday gift programs, clothing donations, and assistance for families in need. Many opportunities are available during the holiday season.",
-    ageDisplay: "Most likely adults",
+    ageDisplay: "Age 18+",
     minimumAge: null,
     requirements: ["Apply by filling out a form"],
     schedule: ["Many opportunities are available during the holiday season"],
@@ -476,7 +476,7 @@ export const opportunities: VolunteerOpportunity[] = [
     weekend: false,
     duration: "Contact organization",
     needsVerification: true,
-    tags: ["Age varies", "Seasonal", "Food drives", "Needs verification"]
+    tags: ["Age 18+", "Seasonal", "Food drives", "Needs verification"]
   },
   {
     id: "dumont-shade-tree-commission",
@@ -485,7 +485,7 @@ export const opportunities: VolunteerOpportunity[] = [
     category: "Environment",
     description:
       "Residents can participate in tree-planting and events and can still gain hours.",
-    ageDisplay: "Mostly for adults",
+    ageDisplay: "Age 18+",
     minimumAge: null,
     requirements: ["No volunteer application"],
     schedule: ["Tree-planting and events"],
@@ -496,7 +496,7 @@ export const opportunities: VolunteerOpportunity[] = [
     weekend: false,
     duration: "Contact organization",
     needsVerification: true,
-    tags: ["Age varies", "Tree planting", "No application"]
+    tags: ["Age 18+", "Tree planting", "No application"]
   },
   {
     id: "the-food-brigade-inc-dumont",
@@ -505,7 +505,7 @@ export const opportunities: VolunteerOpportunity[] = [
     category: "Food Assistance",
     description:
       "Help collect, sort, and distribute food to local families experiencing food insecurity through community outreach and food assistance programs.",
-    ageDisplay: "Pretty much all ages, high school, retired adults, at-home parents",
+    ageDisplay: "Age varies; high school students, retired adults, and at-home parents",
     minimumAge: null,
     requirements: [],
     schedule: ["Contact organization"],
@@ -654,7 +654,7 @@ export const opportunities: VolunteerOpportunity[] = [
     category: "Faith-Based",
     description:
       "Volunteer for food drives, parish events, holiday outreach, youth ministry, and community service projects throughout the year.",
-    ageDisplay: "Teens and adults",
+    ageDisplay: "Age varies; teens and adults",
     minimumAge: null,
     requirements: [],
     schedule: ["Throughout the year"],
@@ -666,7 +666,7 @@ export const opportunities: VolunteerOpportunity[] = [
     weekend: false,
     duration: "Ongoing",
     needsVerification: false,
-    tags: ["Teens and adults", "Food drives", "Form"]
+    tags: ["Age varies", "Teens", "Food drives", "Form"]
   },
   {
     id: "morrill-memorial-library",
@@ -798,7 +798,7 @@ export const opportunities: VolunteerOpportunity[] = [
     category: "Library",
     description:
       "Help with library programs, community events, and special projects. The library also welcomes volunteers for its ESL tutoring program and other activities.",
-    ageDisplay: "Teens and adults",
+    ageDisplay: "Age varies; teens and adults",
     minimumAge: null,
     requirements: ["Contact them or go to the library to sign up"],
     schedule: ["Contact organization"],
@@ -809,7 +809,7 @@ export const opportunities: VolunteerOpportunity[] = [
     weekend: false,
     duration: "Contact organization",
     needsVerification: true,
-    tags: ["Teens and adults", "ESL tutoring", "Needs verification"]
+    tags: ["Age varies", "Teens", "ESL tutoring", "Needs verification"]
   },
   {
     id: "our-lady-of-victories-church",
@@ -944,7 +944,7 @@ export const opportunities: VolunteerOpportunity[] = [
     category: "Civic",
     description:
       "Residents may serve the borough through groups involving environmental issues, public health, accessibility, emergency planning, recreation, and other community matters.",
-    ageDisplay: "Adults",
+    ageDisplay: "Age 18+",
     minimumAge: 18,
     requirements: ["Contact by mail by scanning codes"],
     schedule: ["Multiple different kinds of volunteering"],
@@ -955,7 +955,7 @@ export const opportunities: VolunteerOpportunity[] = [
     weekend: false,
     duration: "Contact organization",
     needsVerification: true,
-    tags: ["Adults", "Boards", "Committees"]
+    tags: ["Age 18+", "Boards", "Committees"]
   },
   {
     id: "bergenfield-environmental-committee",
@@ -964,7 +964,7 @@ export const opportunities: VolunteerOpportunity[] = [
     category: "Environment",
     description:
       "Participate in local environmental planning and projects through the borough's Environmental Committee.",
-    ageDisplay: "Adults",
+    ageDisplay: "Age 18+",
     minimumAge: 18,
     requirements: ["Join by form and mail"],
     schedule: ["Contact organization"],
@@ -975,7 +975,7 @@ export const opportunities: VolunteerOpportunity[] = [
     weekend: false,
     duration: "Contact organization",
     needsVerification: false,
-    tags: ["Adults", "Environment", "Mail form"]
+    tags: ["Age 18+", "Environment", "Mail form"]
   },
   {
     id: "bergenfield-shade-tree-committee",
@@ -984,7 +984,7 @@ export const opportunities: VolunteerOpportunity[] = [
     category: "Environment",
     description:
       "Support efforts to preserve Bergenfield's tree canopy, promote healthy landscapes, and beautify public spaces.",
-    ageDisplay: "Adults",
+    ageDisplay: "Age 18+",
     minimumAge: 18,
     requirements: ["Join by mail"],
     schedule: ["Contact organization"],
@@ -995,7 +995,7 @@ export const opportunities: VolunteerOpportunity[] = [
     weekend: false,
     duration: "Contact organization",
     needsVerification: false,
-    tags: ["Adults", "Trees", "Beautification"]
+    tags: ["Age 18+", "Trees", "Beautification"]
   },
   {
     id: "cresskill-fire-department",
@@ -1004,7 +1004,7 @@ export const opportunities: VolunteerOpportunity[] = [
     category: "Public Safety",
     description:
       "Join the Volunteer Fire Division or EMS Division to receive professional training and help respond to emergencies and community events. Applications are accepted year-round.",
-    ageDisplay: "Adult",
+    ageDisplay: "Age 18+",
     minimumAge: 18,
     requirements: ["Email them"],
     schedule: ["Applications are accepted year-round"],
@@ -1015,7 +1015,7 @@ export const opportunities: VolunteerOpportunity[] = [
     weekend: false,
     duration: "Ongoing",
     needsVerification: true,
-    tags: ["Adults", "Training", "Year-round"]
+    tags: ["Age 18+", "Training", "Year-round"]
   },
   {
     id: "cresskill-public-library-friends",
@@ -1171,7 +1171,7 @@ export const opportunities: VolunteerOpportunity[] = [
     category: "Animals",
     description:
       "Help care for foster dogs, assist at adoption events, transport animals, or support fundraising for this all-volunteer dog rescue.",
-    ageDisplay: "Mostly all ages, probably high school and adults mostly",
+    ageDisplay: "Age varies; mostly high school students and adults",
     minimumAge: null,
     requirements: ["Fill out form"],
     schedule: ["Contact organization"],
@@ -1182,7 +1182,7 @@ export const opportunities: VolunteerOpportunity[] = [
     weekend: false,
     duration: "Contact organization",
     needsVerification: true,
-    tags: ["Age varies", "High school", "Adults", "Animal rescue"]
+    tags: ["Age varies", "High school", "Animal rescue"]
   },
   {
     id: "korean-community-center",
@@ -1353,7 +1353,7 @@ export const opportunities: VolunteerOpportunity[] = [
     category: "Recreation",
     description:
       "Volunteers help support the Alpine Swim Club and seasonal community programs. Certified lifeguards are also recruited each season.",
-    ageDisplay: "Adults welcome; under 18 may volunteer with working papers",
+    ageDisplay: "Age varies; under 18 may volunteer with working papers",
     minimumAge: null,
     requirements: ["Contact them", "Under 18 may volunteer with working papers"],
     schedule: ["Seasonal and includes both volunteer support and paid lifeguard roles"],
@@ -1433,7 +1433,7 @@ export const opportunities: VolunteerOpportunity[] = [
     category: "Library",
     description:
       "Help with children's programs, technology assistance, shelving books, library events, and community projects. Volunteer openings vary throughout the year.",
-    ageDisplay: "Tweens and teens apply via application for various roles; adult volunteers also volunteer here",
+    ageDisplay: "Age varies; tweens, teens, and adults",
     minimumAge: null,
     requirements: ["Tweens and teens apply via application for various roles"],
     schedule: ["Volunteer openings vary throughout the year"],
@@ -1444,7 +1444,7 @@ export const opportunities: VolunteerOpportunity[] = [
     weekend: false,
     duration: "Contact organization",
     needsVerification: false,
-    tags: ["Age varies", "Tweens", "Teens", "Adults"]
+    tags: ["Age varies", "Tweens", "Teens"]
   },
   {
     id: "junior-friends-of-westwood-public-library",
@@ -1473,7 +1473,7 @@ export const opportunities: VolunteerOpportunity[] = [
     category: "Library",
     description:
       "Volunteer at monthly book sales, sort donated books, assist with fundraising events, and support library programs.",
-    ageDisplay: "Adults and older teens",
+    ageDisplay: "Age varies; older teens and adults",
     minimumAge: null,
     requirements: [],
     schedule: ["Monthly book sales"],
@@ -1484,7 +1484,7 @@ export const opportunities: VolunteerOpportunity[] = [
     weekend: false,
     duration: "Ongoing",
     needsVerification: false,
-    tags: ["Adults", "Older teens", "Book sales"]
+    tags: ["Age varies", "Older teens", "Book sales"]
   },
   {
     id: "westwood-volunteer-ambulance-corps",
@@ -1556,7 +1556,7 @@ export const opportunities: VolunteerOpportunity[] = [
     category: "Civic",
     description:
       "Volunteer on borough boards, committees, emergency service organizations, or community programs by submitting the borough's volunteer form.",
-    ageDisplay: "Adults",
+    ageDisplay: "Age 18+",
     minimumAge: 18,
     requirements: ["Submit the borough's community volunteer form"],
     schedule: ["Contact organization"],
@@ -1567,7 +1567,328 @@ export const opportunities: VolunteerOpportunity[] = [
     weekend: false,
     duration: "Contact organization",
     needsVerification: false,
-    tags: ["Adults", "Boards", "Committees", "Form"]
+    tags: ["Age 18+", "Boards", "Committees", "Form"]
+  },
+  {
+    id: "teaneck-public-library",
+    organization: "Teaneck Public Library",
+    town: "Teaneck",
+    category: "Library",
+    description:
+      "Volunteer through the Teen Volunteer Program, Teen Advisory Board, Craft Helpers, Adopt-a-Shelf, book reviews, media reviews, and library events. Great for earning community service hours.",
+    ageDisplay: "Grades 7-12",
+    minimumAge: null,
+    requirements: ["Apply using the teen volunteer application form"],
+    schedule: ["Contact organization"],
+    volunteerUrl: "https://teanecklibrary.org/teens/teen-volunteer/",
+    applicationUrl: "https://docs.google.com/forms/d/e/1FAIpQLSdagyI-ZSMAt6wxhWpM-os4Ln9ZbaJklm4pX60Gun6zOJHZqA/viewform",
+    notes: [],
+    teenFriendly: true,
+    weekend: false,
+    duration: "Contact organization",
+    needsVerification: false,
+    tags: ["Grades 7-12", "Teen Advisory Board", "Community service hours"]
+  },
+  {
+    id: "teaneck-volunteer-ambulance-corps",
+    organization: "Teaneck Volunteer Ambulance Corps",
+    town: "Teaneck",
+    category: "Healthcare",
+    description:
+      "Volunteer as an EMT or support member with Teaneck's nonprofit ambulance corps. Training is provided.",
+    ageDisplay:
+      "Age 15.5+ for full members; active EMT role is 18+; associate member age varies",
+    minimumAge: 15.5,
+    requirements: [
+      "Be an EMT or commit to becoming one within 12 months of joining",
+      "Able to pass a background check if over 18",
+      "Active member",
+      "EMT",
+      "Associate member"
+    ],
+    schedule: ["4 hour shift per week", "Two 12 hour Sunday shifts per year", "Part time"],
+    volunteerUrl: "https://www.teaneckambulance.org/contact--apply.html",
+    applicationUrl: null,
+    notes: [],
+    teenFriendly: true,
+    weekend: true,
+    duration: "Ongoing",
+    needsVerification: false,
+    tags: ["Age 15.5+", "EMT", "Training", "Sunday shifts"]
+  },
+  {
+    id: "holy-name-medical-center",
+    organization: "Holy Name Medical Center",
+    town: "Teaneck",
+    category: "Healthcare",
+    description:
+      "The Department of Volunteer Services brings together a diverse group of women, men, and teenagers dedicated to supporting patients, families, staff, and visitors with compassion, courtesy, and exceptional service. Volunteers receive training for their roles and can choose from over 100 opportunities throughout the Medical Center - no prior experience is required. With meaningful ways to give back and make a difference every day, there's a place for everyone on the team.",
+    ageDisplay: "Age 16-18 for junior volunteers; college and adult programs available",
+    minimumAge: 16,
+    requirements: [
+      "Volunteer adult program",
+      "College volunteer opportunity",
+      "Junior volunteer program",
+      "College volunteers have the same credentials as adult volunteers",
+      "Shadowing physicians"
+    ],
+    schedule: [
+      "Adult program requires 75 service hours per year minimum",
+      "Monday-Friday for 4 hour shifts",
+      "Junior volunteer program requires 6 months and 75 hours"
+    ],
+    volunteerUrl: "https://www.holyname.org/Volunteer/index.aspx",
+    applicationUrl: null,
+    notes: [],
+    teenFriendly: true,
+    weekend: false,
+    duration: "Ongoing",
+    needsVerification: false,
+    tags: ["Age 16+", "Grades 9-12", "Training", "75 hours"]
+  },
+  {
+    id: "helping-hand-food-pantry",
+    organization: "Helping Hand Food Pantry",
+    town: "Teaneck",
+    category: "Food Assistance",
+    description:
+      "Help distribute food, organize donations, and support local families. The pantry actively welcomes volunteers.",
+    ageDisplay: "Age varies",
+    minimumAge: null,
+    requirements: ["Contact them and fill out form"],
+    schedule: ["Contact organization"],
+    volunteerUrl: "https://teaneckpantry.com/volunteer-inquiry",
+    applicationUrl: null,
+    notes: ["Needs verification: age not listed"],
+    teenFriendly: false,
+    weekend: false,
+    duration: "Contact organization",
+    needsVerification: true,
+    tags: ["Age varies", "Food pantry", "Volunteer inquiry"]
+  },
+  {
+    id: "teaneck-public-schools",
+    organization: "Teaneck Public Schools",
+    town: "Teaneck",
+    category: "Education",
+    description:
+      "Volunteer as a reading buddy, tutor, mentor, classroom helper, or library assistant after completing training and a background check.",
+    ageDisplay: "Age 18+",
+    minimumAge: 18,
+    requirements: ["Training", "Background check"],
+    schedule: ["Regularly or just a few times a year"],
+    volunteerUrl: "https://www.teaneckschools.org/Volunteers.aspx",
+    applicationUrl: null,
+    notes: ["Adults and community members"],
+    teenFriendly: false,
+    weekend: false,
+    duration: "One-time and ongoing",
+    needsVerification: false,
+    tags: ["Age 18+", "Tutoring", "Background check"]
+  },
+  {
+    id: "never-alone-again-resource-center",
+    organization: "Never Alone Again Resource Center",
+    town: "Teaneck",
+    category: "Social Services",
+    description:
+      "Help distribute clothing and essentials to families in need. Student volunteers can earn community service hours.",
+    ageDisplay: "Age varies; students and adults",
+    minimumAge: null,
+    requirements: ["Sign up and apply"],
+    schedule: ["Contact organization"],
+    volunteerUrl: null,
+    applicationUrl: "https://charityquest.io/questList/19159AB512A5D4B9",
+    notes: [],
+    teenFriendly: true,
+    weekend: false,
+    duration: "Contact organization",
+    needsVerification: false,
+    tags: ["Age varies", "Students", "Community service hours"]
+  },
+  {
+    id: "hackensack-university-medical-center",
+    organization: "Hackensack University Medical Center",
+    town: "Hackensack",
+    category: "Healthcare",
+    description:
+      "Volunteers are expected to interact respectfully with patients, visitors, physicians, and staff while completing required training, wearing the provided uniform, and working effectively as part of a team.",
+    ageDisplay: "Age 16+",
+    minimumAge: 16,
+    requirements: [
+      "Complete required training",
+      "Wear the provided uniform",
+      "Work effectively as part of a team"
+    ],
+    schedule: ["Commit 4 hours a week", "80 hours per year"],
+    volunteerUrl: "https://www.hackensackmeridianhealth.org/en/patients-and-visitors/volunteer-program",
+    applicationUrl: null,
+    notes: [],
+    teenFriendly: true,
+    weekend: false,
+    duration: "Ongoing",
+    needsVerification: false,
+    tags: ["Age 16+", "Training", "4 hours/week", "80 hours/year"]
+  },
+  {
+    id: "johnson-public-library",
+    organization: "Johnson Public Library",
+    town: "Hackensack",
+    category: "Library",
+    description:
+      "Assist with children's events, shelving, library programs, and community activities. Contact the library for volunteer opportunities and apply using the form.",
+    ageDisplay: "Age 18+",
+    minimumAge: 18,
+    requirements: ["Apply through city of Johnson form"],
+    schedule: ["Contact organization"],
+    volunteerUrl: null,
+    applicationUrl: "https://www.cityofjohnston.com/FormCenter/Library-5/Adult-Volunteer-Application-Ages-18-93",
+    notes: ["Needs verification: source says city of Johnson/Johnston form"],
+    teenFriendly: false,
+    weekend: false,
+    duration: "Contact organization",
+    needsVerification: true,
+    tags: ["Age 18+", "Library events", "Application form"]
+  },
+  {
+    id: "bergen-county-animal-shelter",
+    organization: "Bergen County Animal Shelter",
+    town: "Hackensack",
+    category: "Animals",
+    description:
+      "Care for animals, help with adoption events, walking dogs, and cleaning kennels.",
+    ageDisplay: "Age 18+",
+    minimumAge: 18,
+    requirements: [],
+    schedule: ["Contact organization"],
+    volunteerUrl: "https://bergencountynj.gov/bergen-county-department-of-health-services/about-animal-shelter-adoption-center/volunteer-opportunities/",
+    applicationUrl: "https://bergencountynj.gov/wp-content/uploads/2025/06/Volunteer-App-6-11-25.pdf",
+    notes: [],
+    teenFriendly: false,
+    weekend: false,
+    duration: "Contact organization",
+    needsVerification: false,
+    tags: ["Age 18+", "Animal shelter", "Application PDF"]
+  },
+  {
+    id: "meals-on-wheels-north-jersey",
+    organization: "Meals on Wheels North Jersey",
+    town: "Hackensack",
+    category: "Food Assistance",
+    description:
+      "Deliver meals and assist seniors throughout Bergen County.",
+    ageDisplay: "Age 18+",
+    minimumAge: 18,
+    requirements: ["Search volunteer opportunities"],
+    schedule: ["Contact organization"],
+    volunteerUrl: "https://www.mealsonwheelsamerica.org/volunteer/",
+    applicationUrl: null,
+    notes: ["Needs verification: source listed mostly adults"],
+    teenFriendly: false,
+    weekend: false,
+    duration: "Contact organization",
+    needsVerification: true,
+    tags: ["Age 18+", "Seniors", "Meal delivery"]
+  },
+  {
+    id: "habitat-for-humanity-of-bergen-county",
+    organization: "Habitat for Humanity of Bergen County",
+    town: "Hackensack",
+    category: "Housing",
+    description:
+      "Help build and repair homes, organize donations, and support fundraising events.",
+    ageDisplay: "Age varies",
+    minimumAge: null,
+    requirements: ["Apply through application and choose a nearby town"],
+    schedule: ["Contact organization"],
+    volunteerUrl: "https://www.habitat.org/volunteer",
+    applicationUrl: null,
+    notes: ["Hackensack, Westwood, and more"],
+    teenFriendly: false,
+    weekend: false,
+    duration: "Contact organization",
+    needsVerification: true,
+    tags: ["Age varies", "Housing", "Nearby towns"]
+  },
+  {
+    id: "englewood-cliffs-recreation-department",
+    organization: "Englewood Cliffs Recreation Department",
+    town: "Englewood Cliffs",
+    category: "Recreation",
+    description:
+      "Volunteer as a coach or helper for recreation programs and community events. Background checks are required.",
+    ageDisplay: "Age varies",
+    minimumAge: null,
+    requirements: ["Reach out via email", "Background checks are required"],
+    schedule: ["Contact organization"],
+    volunteerUrl: "https://englewoodcliffsnj.org/departments/parks_recreation/volunteer.php",
+    applicationUrl: null,
+    notes: ["Contact organization"],
+    teenFriendly: false,
+    weekend: false,
+    duration: "Contact organization",
+    needsVerification: true,
+    tags: ["Age varies", "Coach", "Background check"]
+  },
+  {
+    id: "englewood-cliffs-volunteer-fire-department",
+    organization: "Englewood Cliffs Volunteer Fire Department",
+    town: "Englewood Cliffs",
+    category: "Public Safety",
+    description:
+      "Volunteer firefighters respond to emergencies and participate in training and community outreach.",
+    ageDisplay: "Age varies",
+    minimumAge: null,
+    requirements: ["Fill out form", "Contact department for age"],
+    schedule: ["Contact organization"],
+    volunteerUrl: "https://www.englewoodcliffsfd.org/join",
+    applicationUrl: null,
+    notes: ["Needs verification: age not mentioned"],
+    teenFriendly: false,
+    weekend: false,
+    duration: "Contact organization",
+    needsVerification: true,
+    tags: ["Age varies", "Training", "Form"]
+  },
+  {
+    id: "englewood-cliffs-public-library",
+    organization: "Englewood Cliffs Public Library",
+    town: "Englewood Cliffs",
+    category: "Library",
+    description:
+      "Help with children's activities, library events, and community programs when volunteer positions are available.",
+    ageDisplay: "Age varies",
+    minimumAge: null,
+    requirements: ["To join, fill out the form", "Contact library for age"],
+    schedule: ["Volunteer positions vary"],
+    volunteerUrl: "https://englewoodlibrary.org/friends-of-the-library/",
+    applicationUrl: null,
+    notes: ["Needs verification: source says most likely adult"],
+    teenFriendly: false,
+    weekend: false,
+    duration: "Contact organization",
+    needsVerification: true,
+    tags: ["Age varies", "Library events", "Form"]
+  },
+  {
+    id: "flat-rock-brook-nature-center",
+    organization: "Flat Rock Brook Nature Center",
+    town: "Englewood Cliffs",
+    category: "Environment",
+    description:
+      "Volunteer with trail maintenance, environmental education, habitat restoration, and special events.",
+    ageDisplay: "Age varies; students and adults",
+    minimumAge: null,
+    requirements: ["Fill out form"],
+    schedule: ["Contact organization"],
+    volunteerUrl: "https://www.flatrockbrook.org/volunteer",
+    applicationUrl: null,
+    notes: ["Very close to Englewood Cliffs"],
+    teenFriendly: true,
+    weekend: false,
+    duration: "Contact organization",
+    needsVerification: false,
+    tags: ["Age varies", "Students", "Trail maintenance", "Habitat restoration"]
   }
 ];
 
