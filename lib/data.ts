@@ -8,11 +8,27 @@ type SupabaseOpportunityRow = {
   data: VolunteerOpportunity;
 };
 
-function hasSupabaseConfig() {
-  return Boolean(
-    process.env.NEXT_PUBLIC_SUPABASE_URL &&
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+function mergeWithLocalOpportunities(remoteOpportunities: VolunteerOpportunity[]) {
+  const opportunitiesById = new Map(
+    localOpportunities.map((opportunity) => [opportunity.id, opportunity])
   );
+
+  for (const opportunity of remoteOpportunities) {
+    opportunitiesById.set(opportunity.id, opportunity);
+  }
+
+  return Array.from(opportunitiesById.values());
+}
+
+function getSupabaseKey() {
+  return (
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ??
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
+  );
+}
+
+function hasSupabaseConfig() {
+  return Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL && getSupabaseKey());
 }
 
 export async function getOpportunities() {
@@ -21,12 +37,14 @@ export async function getOpportunities() {
   }
 
   try {
+    const supabaseKey = getSupabaseKey()!;
+
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/volunteer_opportunities?select=data&order=id.asc`,
       {
         headers: {
-          apikey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!}`
+          apikey: supabaseKey,
+          Authorization: `Bearer ${supabaseKey}`
         },
         next: { revalidate: 3600 }
       }
@@ -37,7 +55,7 @@ export async function getOpportunities() {
     }
 
     const rows = (await response.json()) as SupabaseOpportunityRow[];
-    return rows.map((row) => row.data);
+    return mergeWithLocalOpportunities(rows.map((row) => row.data));
   } catch {
     return localOpportunities;
   }
