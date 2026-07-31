@@ -36,6 +36,28 @@ To regenerate the seed file after editing the local data:
 node scripts/print-supabase-seed.mjs
 ```
 
+## Private Analytics
+
+The site records anonymous page views and button/link clicks in Supabase when the public Supabase variables are configured. It does not collect names, emails, or form data.
+
+Run [supabase/schema.sql](supabase/schema.sql) in Supabase again to create the `site_events` table. Public visitors can insert analytics events, but they cannot read them.
+
+To view analytics privately, add your service-role key to `.env.local` on your computer only:
+
+```bash
+SUPABASE_SERVICE_ROLE_KEY=your-supabase-service-role-key
+```
+
+Do not add `SUPABASE_SERVICE_ROLE_KEY` to Vercel, GitHub, or any `NEXT_PUBLIC_` variable.
+
+Start the local dashboard:
+
+```bash
+pnpm analytics
+```
+
+Open [http://localhost:4310](http://localhost:4310). Leave that terminal running when you want the dashboard available on your computer.
+
 ## Vercel Setup
 
 Import this repository into Vercel and use the included [vercel.json](vercel.json):

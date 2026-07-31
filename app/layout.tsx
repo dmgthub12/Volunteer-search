@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "leaflet/dist/leaflet.css";
+import { AnalyticsTracker } from "./AnalyticsTracker";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -31,6 +32,7 @@ export default function RootLayout({
             </div>
           </nav>
         </header>
+        <AnalyticsTracker />
         {children}
       </body>
     </html>

@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build && node scripts/prepare-dist.mjs",
+    "analytics": "node scripts/analytics-dashboard.mjs",
     "start": "next start"
   },
   "dependencies": {
