@@ -404,7 +404,7 @@ export function OpportunityBrowser({
           </div>
         </div>
 
-        <aside className="soft-card h-fit p-4 xl:sticky xl:top-24">
+        <aside className="soft-card order-first h-fit p-4 xl:order-none xl:sticky xl:top-24">
           <div className="flex items-center justify-between gap-3">
             <div>
               <h2 className="text-sm font-bold text-primary">Map</h2>
@@ -415,7 +415,7 @@ export function OpportunityBrowser({
             <MapPin className="h-5 w-5 text-accent" />
           </div>
 
-          <div className="relative mt-3 aspect-[4/5] overflow-hidden rounded-2xl border border-slate-200 bg-gradient-to-br from-mint via-white to-[#dcecff]">
+          <div className="relative mt-3 aspect-[16/9] overflow-hidden rounded-2xl border border-slate-200 bg-gradient-to-br from-mint via-white to-[#dcecff] xl:aspect-[4/5]">
             <div className="absolute inset-x-[18%] top-[8%] h-[84%] rounded-[45%] border border-primary/15 bg-white/55 shadow-inner" />
             <div className="absolute left-[21%] top-[3%] h-[92%] w-[50%] rotate-6 rounded-[48%] border border-accent/40 bg-accent/10" />
             {visibleTowns.map(([town, count]) => {
