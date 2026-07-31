@@ -34,6 +34,8 @@ const emptyFilters: Filters = {
   duration: ""
 };
 
+const opportunitiesPerPage = 45;
+
 const townCoordinates: Record<string, { lat: number; lng: number }> = {
   Alpine: { lat: 40.9559, lng: -73.9312 },
   Bergenfield: { lat: 40.9276, lng: -73.9974 },
@@ -209,11 +211,11 @@ export function OpportunityBrowser({
 
   const activeFilters = getActiveFilterLabels(filters);
   const hasFilters = activeFilters.length > 0 || query.trim().length > 0;
-  const pageSize = Math.ceil(filteredOpportunities.length / 2);
-  const totalPages = filteredOpportunities.length > pageSize ? 2 : 1;
+  const totalPages =
+    filteredOpportunities.length > opportunitiesPerPage ? 2 : 1;
   const visibleOpportunities = filteredOpportunities.slice(
-    (page - 1) * pageSize,
-    page * pageSize
+    (page - 1) * opportunitiesPerPage,
+    page * opportunitiesPerPage
   );
   const mappedTowns = Array.from(
     filteredOpportunities.reduce((townMap, opportunity) => {
@@ -232,7 +234,10 @@ export function OpportunityBrowser({
   }
 
   const selectTownFromMap = useCallback((town: string) => {
-    setFilters((current) => ({ ...current, town }));
+    setFilters((current) => ({
+      ...current,
+      town: current.town === town ? "" : town
+    }));
   }, []);
 
   function removeFilter(key: keyof Filters) {
