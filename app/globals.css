@@ -81,4 +81,11 @@ a {
   .soft-card {
     @apply rounded-2xl border border-slate-200/80 bg-white shadow-soft;
   }
+
+  .opportunity-description {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 }

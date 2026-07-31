@@ -128,7 +128,7 @@ export function OpportunityBrowser({
       opportunity.needsVerification ? "Needs Verification" : null
     ].filter(Boolean) as string[];
 
-    return Array.from(new Set([...tags, ...opportunity.tags])).slice(0, 5);
+    return Array.from(new Set([...tags, ...opportunity.tags])).slice(0, 3);
   }
 
   return (
@@ -281,9 +281,9 @@ export function OpportunityBrowser({
           </div>
         ) : null}
 
-        <div className="mt-6 space-y-4">
+        <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {filteredOpportunities.length === 0 ? (
-            <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-8 text-center text-slate-600">
+            <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-8 text-center text-slate-600 sm:col-span-2 xl:col-span-3">
               No opportunities found. Add the volunteer file information to{" "}
               <code className="rounded bg-lightBackground px-2 py-1">
                 lib/opportunities.ts
@@ -293,31 +293,31 @@ export function OpportunityBrowser({
           ) : (
             filteredOpportunities.map((opportunity) => (
               <Link
-                className="group block rounded-2xl border border-slate-200/80 bg-white p-5 shadow-soft transition duration-200 hover:-translate-y-0.5 hover:border-accent/60 hover:shadow-lift"
+                className="group block h-full rounded-2xl border border-slate-200/80 bg-white p-4 shadow-soft transition duration-200 hover:-translate-y-1 hover:border-accent/60 hover:shadow-lift"
                 href={`/opportunities/${opportunity.id}`}
                 key={opportunity.id}
               >
-                <article className="grid gap-4 sm:grid-cols-[1fr_auto] sm:items-center">
+                <article className="flex min-h-[255px] flex-col">
                   <div>
-                    <div className="flex flex-wrap items-center gap-2">
-                      <h2 className="text-xl font-bold text-primary">
+                    <div className="flex items-start justify-between gap-2">
+                      <h2 className="text-lg font-bold leading-snug text-primary">
                         {opportunity.organization}
                       </h2>
                       {opportunity.needsVerification ? (
-                        <span className="rounded-full bg-amber-50 px-2.5 py-1 text-xs font-bold text-amber-700">
-                          Needs verification
+                        <span className="shrink-0 rounded-full bg-amber-50 px-2 py-1 text-[11px] font-bold text-amber-700">
+                          Verify
                         </span>
                       ) : null}
                     </div>
-                    <p className="mt-2 flex flex-wrap items-center gap-2 text-sm font-semibold text-slate-500">
+                    <p className="mt-2 flex flex-wrap items-center gap-2 text-xs font-semibold uppercase tracking-normal text-slate-500">
                       <span className="inline-flex items-center gap-1">
-                        <MapPin className="h-4 w-4" />
+                        <MapPin className="h-3.5 w-3.5" />
                         {opportunity.town}
                       </span>
                       <span>&bull;</span>
                       <span>{opportunity.category}</span>
                     </p>
-                    <p className="mt-3 leading-7 text-slate-700">
+                    <p className="opportunity-description mt-3 text-sm leading-6 text-slate-700">
                       {opportunity.description}
                     </p>
                     <div className="mt-4 flex flex-wrap gap-2">
@@ -329,7 +329,7 @@ export function OpportunityBrowser({
                       ))}
                     </div>
                   </div>
-                  <span className="inline-flex items-center gap-2 font-bold text-primary">
+                  <span className="mt-auto inline-flex items-center gap-2 pt-5 text-sm font-bold text-primary">
                     View Details
                     <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
                   </span>
