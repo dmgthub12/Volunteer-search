@@ -11,7 +11,7 @@ import {
   X
 } from "lucide-react";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { VolunteerOpportunity } from "../../lib/opportunities";
 
 type Filters = {
@@ -62,6 +62,7 @@ export function OpportunityBrowser({
 }) {
   const [query, setQuery] = useState("");
   const [filters, setFilters] = useState<Filters>(emptyFilters);
+  const [page, setPage] = useState(1);
 
   const filteredOpportunities = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
@@ -105,6 +106,16 @@ export function OpportunityBrowser({
 
   const activeFilters = getActiveFilterLabels(filters);
   const hasFilters = activeFilters.length > 0 || query.trim().length > 0;
+  const pageSize = Math.ceil(filteredOpportunities.length / 2);
+  const totalPages = filteredOpportunities.length > pageSize ? 2 : 1;
+  const visibleOpportunities = filteredOpportunities.slice(
+    (page - 1) * pageSize,
+    page * pageSize
+  );
+
+  useEffect(() => {
+    setPage(1);
+  }, [filters, query]);
 
   function updateFilter<K extends keyof Filters>(key: K, value: Filters[K]) {
     setFilters((current) => ({ ...current, [key]: value }));
@@ -127,7 +138,7 @@ export function OpportunityBrowser({
       opportunity.duration.includes("Ongoing") ? "Ongoing" : null
     ].filter(Boolean) as string[];
 
-    return Array.from(new Set([...tags, ...opportunity.tags])).slice(0, 2);
+    return Array.from(new Set([...tags, ...opportunity.tags])).slice(0, 1);
   }
 
   return (
@@ -249,7 +260,7 @@ export function OpportunityBrowser({
         </div>
 
         {hasFilters ? (
-          <div className="mt-4 flex flex-wrap items-center gap-2">
+          <div className="mt-3 flex flex-wrap items-center gap-2">
             {query.trim() ? (
               <button className="filter-chip" type="button" onClick={() => setQuery("")}>
                 Search: {query} <X className="h-3.5 w-3.5" />
@@ -272,9 +283,31 @@ export function OpportunityBrowser({
         ) : null}
       </div>
 
-        <div className="mt-5 grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-7">
+      <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <p className="text-sm font-bold text-slate-500">
+          Showing {visibleOpportunities.length} of {filteredOpportunities.length} opportunities
+        </p>
+        {totalPages > 1 ? (
+          <div className="inline-flex w-fit rounded-2xl border border-slate-200 bg-white p-1 shadow-sm">
+            {[1, 2].map((pageNumber) => (
+              <button
+                className={
+                  page === pageNumber ? "page-tab page-tab-active" : "page-tab"
+                }
+                key={pageNumber}
+                type="button"
+                onClick={() => setPage(pageNumber)}
+              >
+                Page {pageNumber}
+              </button>
+            ))}
+          </div>
+        ) : null}
+      </div>
+
+        <div className="mt-4 grid gap-2.5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-8">
           {filteredOpportunities.length === 0 ? (
-            <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-8 text-center text-slate-600 sm:col-span-2 md:col-span-3 lg:col-span-4 xl:col-span-5 2xl:col-span-7">
+            <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-8 text-center text-slate-600 sm:col-span-2 md:col-span-3 lg:col-span-4 xl:col-span-6 2xl:col-span-8">
               No opportunities found. Add the volunteer file information to{" "}
               <code className="rounded bg-lightBackground px-2 py-1">
                 lib/opportunities.ts
@@ -282,16 +315,16 @@ export function OpportunityBrowser({
               .
             </div>
           ) : (
-            filteredOpportunities.map((opportunity) => (
+            visibleOpportunities.map((opportunity) => (
               <Link
-                className="group block h-full rounded-2xl border border-slate-200/80 bg-white p-3 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-accent/60 hover:shadow-soft"
+                className="group block h-full rounded-2xl border border-slate-200/80 bg-white p-2.5 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-accent/60 hover:shadow-soft"
                 href={`/opportunities/${opportunity.id}`}
                 key={opportunity.id}
               >
-                <article className="flex min-h-[172px] flex-col">
+                <article className="flex min-h-[138px] flex-col">
                   <div>
                     <div className="flex items-start justify-between gap-2">
-                      <h2 className="line-clamp-2 text-sm font-bold leading-snug text-primary">
+                      <h2 className="line-clamp-2 text-[13px] font-bold leading-snug text-primary">
                         {opportunity.organization}
                       </h2>
                       {opportunity.needsVerification ? (
@@ -308,10 +341,10 @@ export function OpportunityBrowser({
                       <span>&bull;</span>
                       <span>{opportunity.category}</span>
                     </p>
-                    <p className="opportunity-description mt-2 text-xs leading-5 text-slate-700">
+                    <p className="opportunity-description mt-2 text-[11px] leading-4 text-slate-600">
                       {opportunity.description}
                     </p>
-                    <div className="mt-3 flex flex-wrap gap-1.5">
+                    <div className="mt-2 flex flex-wrap gap-1.5">
                       <span className="compact-pill">{opportunity.ageDisplay}</span>
                       {usefulTags(opportunity).map((tag) => (
                         <span className="compact-pill" key={tag}>
