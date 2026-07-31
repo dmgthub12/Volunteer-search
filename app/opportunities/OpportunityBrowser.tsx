@@ -12,7 +12,7 @@ import {
   X
 } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import type { VolunteerOpportunity } from "../../lib/opportunities";
 import type { Map as LeafletMap } from "leaflet";
 
@@ -75,8 +75,10 @@ function getActiveFilterLabels(filters: Filters) {
 }
 
 function BergenCountyMap({
+  onTownSelect,
   towns
 }: {
+  onTownSelect: (town: string) => void;
   towns: Array<[string, number]>;
 }) {
   const mapElementId = "bergen-opportunity-map";
@@ -117,7 +119,10 @@ function BergenCountyMap({
           })
         }).addTo(map);
 
-        marker.bindPopup(`<strong>${town}</strong><br>${count} opportunities`);
+        marker.bindPopup(
+          `<strong>${town}</strong><br>${count} opportunities<br><span>Click pin to filter</span>`
+        );
+        marker.on("click", () => onTownSelect(town));
         bounds.push([point.lat, point.lng]);
       });
 
@@ -133,7 +138,7 @@ function BergenCountyMap({
     return () => {
       map?.remove();
     };
-  }, [towns]);
+  }, [onTownSelect, towns]);
 
   return (
     <div
@@ -225,6 +230,10 @@ export function OpportunityBrowser({
   function updateFilter<K extends keyof Filters>(key: K, value: Filters[K]) {
     setFilters((current) => ({ ...current, [key]: value }));
   }
+
+  const selectTownFromMap = useCallback((town: string) => {
+    setFilters((current) => ({ ...current, town }));
+  }, []);
 
   function removeFilter(key: keyof Filters) {
     setFilters((current) => ({ ...current, [key]: emptyFilters[key] }));
@@ -485,7 +494,10 @@ export function OpportunityBrowser({
             <MapPin className="h-5 w-5 text-accent" />
           </div>
 
-          <BergenCountyMap towns={mappedTowns} />
+          <BergenCountyMap
+            towns={mappedTowns}
+            onTownSelect={selectTownFromMap}
+          />
 
           <div className="mt-3 max-h-72 space-y-1.5 overflow-auto pr-1">
             {visibleOpportunities.slice(0, 18).map((opportunity) => (

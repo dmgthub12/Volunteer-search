@@ -107,7 +107,7 @@ a {
   }
 
   .leaflet-count-pin {
-    @apply flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-primary text-[10px] font-black text-white shadow-soft;
+    @apply flex h-6 w-6 cursor-pointer items-center justify-center rounded-full border-2 border-white bg-primary text-[10px] font-black text-white shadow-soft transition hover:scale-110 hover:bg-accent hover:text-primary;
   }
 
   .map-result {
