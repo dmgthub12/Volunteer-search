@@ -70,38 +70,44 @@ export function OpportunityBrowser({
       ? Number(filters.minimumAge)
       : null;
 
-    return opportunities.filter((opportunity) => {
-      const matchesSearch =
-        !normalizedQuery ||
-        [
-          opportunity.organization,
-          opportunity.town,
-          opportunity.category,
-          opportunity.description
-        ].some((value) => includesText(value, normalizedQuery));
+    return opportunities
+      .filter((opportunity) => {
+        const matchesSearch =
+          !normalizedQuery ||
+          [
+            opportunity.organization,
+            opportunity.town,
+            opportunity.category,
+            opportunity.description
+          ].some((value) => includesText(value, normalizedQuery));
 
-      const matchesTown = !filters.town || opportunity.town === filters.town;
-      const matchesCategory =
-        !filters.category || opportunity.category === filters.category;
-      const matchesMinimumAge =
-        selectedMinimumAge === null ||
-        opportunity.minimumAge === null ||
-        opportunity.minimumAge <= selectedMinimumAge;
-      const matchesTeen = !filters.teenFriendly || opportunity.teenFriendly;
-      const matchesWeekend = !filters.weekend || opportunity.weekend;
-      const matchesDuration =
-        !filters.duration || opportunity.duration === filters.duration;
+        const matchesTown = !filters.town || opportunity.town === filters.town;
+        const matchesCategory =
+          !filters.category || opportunity.category === filters.category;
+        const matchesMinimumAge =
+          selectedMinimumAge === null ||
+          opportunity.minimumAge === null ||
+          opportunity.minimumAge <= selectedMinimumAge;
+        const matchesTeen = !filters.teenFriendly || opportunity.teenFriendly;
+        const matchesWeekend = !filters.weekend || opportunity.weekend;
+        const matchesDuration =
+          !filters.duration || opportunity.duration === filters.duration;
 
-      return (
-        matchesSearch &&
-        matchesTown &&
-        matchesCategory &&
-        matchesMinimumAge &&
-        matchesTeen &&
-        matchesWeekend &&
-        matchesDuration
+        return (
+          matchesSearch &&
+          matchesTown &&
+          matchesCategory &&
+          matchesMinimumAge &&
+          matchesTeen &&
+          matchesWeekend &&
+          matchesDuration
+        );
+      })
+      .sort(
+        (first, second) =>
+          first.organization.localeCompare(second.organization) ||
+          first.town.localeCompare(second.town)
       );
-    });
   }, [filters, opportunities, query]);
 
   const activeFilters = getActiveFilterLabels(filters);
