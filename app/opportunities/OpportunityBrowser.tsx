@@ -4,6 +4,7 @@ import {
   ArrowRight,
   CalendarDays,
   Clock3,
+  ExternalLink,
   MapPin,
   Search,
   Tag,
@@ -30,6 +31,27 @@ const emptyFilters: Filters = {
   teenFriendly: false,
   weekend: false,
   duration: ""
+};
+
+const townCoordinates: Record<string, { x: number; y: number }> = {
+  Alpine: { x: 47, y: 14 },
+  Bergenfield: { x: 43, y: 55 },
+  Closter: { x: 47, y: 27 },
+  Cresskill: { x: 46, y: 40 },
+  Demarest: { x: 51, y: 31 },
+  Dumont: { x: 46, y: 50 },
+  Englewood: { x: 57, y: 61 },
+  "Englewood Cliffs": { x: 63, y: 62 },
+  Hackensack: { x: 35, y: 75 },
+  "Harrington Park": { x: 41, y: 28 },
+  Haworth: { x: 43, y: 43 },
+  Northvale: { x: 43, y: 10 },
+  Norwood: { x: 45, y: 19 },
+  "Old Tappan": { x: 35, y: 12 },
+  Rockleigh: { x: 50, y: 7 },
+  Teaneck: { x: 50, y: 71 },
+  Tenafly: { x: 55, y: 50 },
+  Westwood: { x: 30, y: 42 }
 };
 
 function includesText(value: string, query: string) {
@@ -118,6 +140,13 @@ export function OpportunityBrowser({
     (page - 1) * pageSize,
     page * pageSize
   );
+  const visibleTowns = Array.from(
+    visibleOpportunities.reduce((townMap, opportunity) => {
+      const current = townMap.get(opportunity.town) ?? 0;
+      townMap.set(opportunity.town, current + 1);
+      return townMap;
+    }, new Map<string, number>())
+  ).sort(([firstTown], [secondTown]) => firstTown.localeCompare(secondTown));
 
   useEffect(() => {
     setPage(1);
@@ -289,85 +318,153 @@ export function OpportunityBrowser({
         ) : null}
       </div>
 
-      <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-sm font-bold text-slate-500">
-          Showing {visibleOpportunities.length} of {filteredOpportunities.length} opportunities
-        </p>
-        {totalPages > 1 ? (
-          <div className="inline-flex w-fit rounded-2xl border border-slate-200 bg-white p-1 shadow-sm">
-            {[1, 2].map((pageNumber) => (
-              <button
-                className={
-                  page === pageNumber ? "page-tab page-tab-active" : "page-tab"
-                }
-                key={pageNumber}
-                type="button"
-                onClick={() => setPage(pageNumber)}
+      <div className="mt-4 grid gap-4 xl:grid-cols-[minmax(0,1fr)_320px] 2xl:grid-cols-[minmax(0,1fr)_360px]">
+        <div>
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-sm font-bold text-slate-500">
+              Showing {visibleOpportunities.length} of{" "}
+              {filteredOpportunities.length} opportunities
+            </p>
+            {totalPages > 1 ? (
+              <div className="inline-flex w-fit rounded-2xl border border-slate-200 bg-white p-1 shadow-sm">
+                {[1, 2].map((pageNumber) => (
+                  <button
+                    className={
+                      page === pageNumber ? "page-tab page-tab-active" : "page-tab"
+                    }
+                    key={pageNumber}
+                    type="button"
+                    onClick={() => setPage(pageNumber)}
+                  >
+                    Page {pageNumber}
+                  </button>
+                ))}
+              </div>
+            ) : null}
+          </div>
+
+          <div className="mt-4 grid gap-2.5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-6">
+            {filteredOpportunities.length === 0 ? (
+              <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-8 text-center text-slate-600 sm:col-span-2 md:col-span-3 lg:col-span-4 2xl:col-span-6">
+                No opportunities found. Add the volunteer file information to{" "}
+                <code className="rounded bg-lightBackground px-2 py-1">
+                  lib/opportunities.ts
+                </code>
+                .
+              </div>
+            ) : (
+              visibleOpportunities.map((opportunity) => (
+                <Link
+                  className="group block h-full rounded-2xl border border-slate-200/80 bg-white p-2.5 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-accent/60 hover:shadow-soft"
+                  href={`/opportunities/${opportunity.id}`}
+                  key={opportunity.id}
+                >
+                  <article className="flex min-h-[138px] flex-col">
+                    <div>
+                      <div className="flex items-start justify-between gap-2">
+                        <h2 className="line-clamp-2 text-[13px] font-bold leading-snug text-primary">
+                          {opportunity.organization}
+                        </h2>
+                        {opportunity.needsVerification ? (
+                          <span className="shrink-0 rounded-full bg-amber-50 px-1.5 py-0.5 text-[10px] font-bold text-amber-700">
+                            Verify
+                          </span>
+                        ) : null}
+                      </div>
+                      <p className="mt-2 flex flex-wrap items-center gap-1.5 text-[11px] font-semibold uppercase tracking-normal text-slate-500">
+                        <span className="inline-flex items-center gap-1">
+                          <MapPin className="h-3 w-3" />
+                          {opportunity.town}
+                        </span>
+                        <span>&bull;</span>
+                        <span>{opportunity.category}</span>
+                      </p>
+                      <p className="opportunity-description mt-2 text-[11px] leading-4 text-slate-600">
+                        {opportunity.description}
+                      </p>
+                      <div className="mt-2 flex flex-wrap gap-1.5">
+                        <span className="compact-pill">
+                          {opportunity.ageDisplay}
+                        </span>
+                        {usefulTags(opportunity).map((tag) => (
+                          <span className="compact-pill" key={tag}>
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                    <span className="mt-auto inline-flex items-center gap-1.5 pt-3 text-xs font-bold text-primary">
+                      Details
+                      <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-1" />
+                    </span>
+                  </article>
+                </Link>
+              ))
+            )}
+          </div>
+        </div>
+
+        <aside className="soft-card h-fit p-4 xl:sticky xl:top-24">
+          <div className="flex items-center justify-between gap-3">
+            <div>
+              <h2 className="text-sm font-bold text-primary">Map</h2>
+              <p className="mt-1 text-xs text-slate-500">
+                Town pins for this page
+              </p>
+            </div>
+            <MapPin className="h-5 w-5 text-accent" />
+          </div>
+
+          <div className="relative mt-3 aspect-[4/5] overflow-hidden rounded-2xl border border-slate-200 bg-gradient-to-br from-mint via-white to-[#dcecff]">
+            <div className="absolute inset-x-[18%] top-[8%] h-[84%] rounded-[45%] border border-primary/15 bg-white/55 shadow-inner" />
+            <div className="absolute left-[21%] top-[3%] h-[92%] w-[50%] rotate-6 rounded-[48%] border border-accent/40 bg-accent/10" />
+            {visibleTowns.map(([town, count]) => {
+              const point = townCoordinates[town];
+
+              if (!point) return null;
+
+              return (
+                <a
+                  aria-label={`${town}, ${count} opportunities`}
+                  className="map-pin group/pin"
+                  href={`https://www.google.com/maps/search/${encodeURIComponent(
+                    `${town} NJ`
+                  )}`}
+                  key={town}
+                  style={{ left: `${point.x}%`, top: `${point.y}%` }}
+                  target="_blank"
+                >
+                  <span>{count}</span>
+                  <span className="map-label">{town}</span>
+                </a>
+              );
+            })}
+          </div>
+
+          <div className="mt-3 max-h-72 space-y-1.5 overflow-auto pr-1">
+            {visibleOpportunities.slice(0, 18).map((opportunity) => (
+              <a
+                className="map-result"
+                href={`https://www.google.com/maps/search/${encodeURIComponent(
+                  `${opportunity.organization} ${opportunity.town} NJ`
+                )}`}
+                key={opportunity.id}
+                target="_blank"
               >
-                Page {pageNumber}
-              </button>
+                <span className="min-w-0">
+                  <span className="block truncate font-bold text-primary">
+                    {opportunity.organization}
+                  </span>
+                  <span className="block text-[11px] text-slate-500">
+                    {opportunity.town}
+                  </span>
+                </span>
+                <ExternalLink className="h-3.5 w-3.5 shrink-0 text-slate-400" />
+              </a>
             ))}
           </div>
-        ) : null}
+        </aside>
       </div>
-
-        <div className="mt-4 grid gap-2.5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-8">
-          {filteredOpportunities.length === 0 ? (
-            <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-8 text-center text-slate-600 sm:col-span-2 md:col-span-3 lg:col-span-4 xl:col-span-6 2xl:col-span-8">
-              No opportunities found. Add the volunteer file information to{" "}
-              <code className="rounded bg-lightBackground px-2 py-1">
-                lib/opportunities.ts
-              </code>
-              .
-            </div>
-          ) : (
-            visibleOpportunities.map((opportunity) => (
-              <Link
-                className="group block h-full rounded-2xl border border-slate-200/80 bg-white p-2.5 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-accent/60 hover:shadow-soft"
-                href={`/opportunities/${opportunity.id}`}
-                key={opportunity.id}
-              >
-                <article className="flex min-h-[138px] flex-col">
-                  <div>
-                    <div className="flex items-start justify-between gap-2">
-                      <h2 className="line-clamp-2 text-[13px] font-bold leading-snug text-primary">
-                        {opportunity.organization}
-                      </h2>
-                      {opportunity.needsVerification ? (
-                        <span className="shrink-0 rounded-full bg-amber-50 px-1.5 py-0.5 text-[10px] font-bold text-amber-700">
-                          Verify
-                        </span>
-                      ) : null}
-                    </div>
-                    <p className="mt-2 flex flex-wrap items-center gap-1.5 text-[11px] font-semibold uppercase tracking-normal text-slate-500">
-                      <span className="inline-flex items-center gap-1">
-                        <MapPin className="h-3 w-3" />
-                        {opportunity.town}
-                      </span>
-                      <span>&bull;</span>
-                      <span>{opportunity.category}</span>
-                    </p>
-                    <p className="opportunity-description mt-2 text-[11px] leading-4 text-slate-600">
-                      {opportunity.description}
-                    </p>
-                    <div className="mt-2 flex flex-wrap gap-1.5">
-                      <span className="compact-pill">{opportunity.ageDisplay}</span>
-                      {usefulTags(opportunity).map((tag) => (
-                        <span className="compact-pill" key={tag}>
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                  <span className="mt-auto inline-flex items-center gap-1.5 pt-3 text-xs font-bold text-primary">
-                    Details
-                    <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-1" />
-                  </span>
-                </article>
-              </Link>
-            ))
-          )}
-        </div>
     </section>
   );
 }

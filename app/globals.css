@@ -106,6 +106,18 @@ a {
     @apply bg-primary text-white hover:bg-primary hover:text-white;
   }
 
+  .map-pin {
+    @apply absolute flex h-6 w-6 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-2 border-white bg-primary text-[10px] font-black text-white shadow-soft transition hover:z-10 hover:scale-110 hover:bg-accent hover:text-primary;
+  }
+
+  .map-label {
+    @apply pointer-events-none absolute left-1/2 top-7 hidden -translate-x-1/2 whitespace-nowrap rounded-full bg-white px-2 py-1 text-[10px] font-bold text-primary shadow-sm group-hover/pin:block;
+  }
+
+  .map-result {
+    @apply flex items-center justify-between gap-2 rounded-2xl border border-slate-100 bg-white px-3 py-2 text-xs transition hover:border-accent/60 hover:bg-mint;
+  }
+
   .soft-card {
     @apply rounded-2xl border border-slate-200/80 bg-white shadow-soft;
   }
