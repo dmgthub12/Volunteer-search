@@ -33,29 +33,49 @@ const emptyFilters: Filters = {
   duration: ""
 };
 
-const townCoordinates: Record<string, { x: number; y: number }> = {
-  Alpine: { x: 47, y: 14 },
-  Bergenfield: { x: 43, y: 55 },
-  Closter: { x: 47, y: 27 },
-  Cresskill: { x: 46, y: 40 },
-  Demarest: { x: 51, y: 31 },
-  Dumont: { x: 46, y: 50 },
-  Englewood: { x: 57, y: 61 },
-  "Englewood Cliffs": { x: 63, y: 62 },
-  Hackensack: { x: 35, y: 75 },
-  "Harrington Park": { x: 41, y: 28 },
-  Haworth: { x: 43, y: 43 },
-  Northvale: { x: 43, y: 10 },
-  Norwood: { x: 45, y: 19 },
-  "Old Tappan": { x: 35, y: 12 },
-  Rockleigh: { x: 50, y: 7 },
-  Teaneck: { x: 50, y: 71 },
-  Tenafly: { x: 55, y: 50 },
-  Westwood: { x: 30, y: 42 }
+const bergenBounds = {
+  north: 41.05,
+  south: 40.82,
+  east: -73.9,
+  west: -74.08
+};
+
+const townCoordinates: Record<string, { lat: number; lng: number }> = {
+  Alpine: { lat: 40.9559, lng: -73.9312 },
+  Bergenfield: { lat: 40.9276, lng: -73.9974 },
+  Closter: { lat: 40.9732, lng: -73.9615 },
+  Cresskill: { lat: 40.9415, lng: -73.9593 },
+  Demarest: { lat: 40.9573, lng: -73.9637 },
+  Dumont: { lat: 40.9407, lng: -73.9968 },
+  Englewood: { lat: 40.8929, lng: -73.9726 },
+  "Englewood Cliffs": { lat: 40.8854, lng: -73.9524 },
+  Hackensack: { lat: 40.8859, lng: -74.0435 },
+  "Harrington Park": { lat: 40.9837, lng: -73.9799 },
+  Haworth: { lat: 40.9609, lng: -73.9901 },
+  Northvale: { lat: 41.0065, lng: -73.949 },
+  Norwood: { lat: 40.9982, lng: -73.9618 },
+  "Old Tappan": { lat: 41.0107, lng: -73.9918 },
+  Rockleigh: { lat: 41.0004, lng: -73.9304 },
+  Teaneck: { lat: 40.8932, lng: -74.0117 },
+  Tenafly: { lat: 40.9254, lng: -73.9629 },
+  Westwood: { lat: 40.9912, lng: -74.0326 }
 };
 
 function includesText(value: string, query: string) {
   return value.toLowerCase().includes(query.toLowerCase());
+}
+
+function mapPoint({ lat, lng }: { lat: number; lng: number }) {
+  const x =
+    ((lng - bergenBounds.west) / (bergenBounds.east - bergenBounds.west)) * 100;
+  const y =
+    ((bergenBounds.north - lat) / (bergenBounds.north - bergenBounds.south)) *
+    100;
+
+  return {
+    x: Math.min(96, Math.max(4, x)),
+    y: Math.min(96, Math.max(4, y))
+  };
 }
 
 function getActiveFilterLabels(filters: Filters) {
@@ -140,8 +160,8 @@ export function OpportunityBrowser({
     (page - 1) * pageSize,
     page * pageSize
   );
-  const visibleTowns = Array.from(
-    visibleOpportunities.reduce((townMap, opportunity) => {
+  const mappedTowns = Array.from(
+    filteredOpportunities.reduce((townMap, opportunity) => {
       const current = townMap.get(opportunity.town) ?? 0;
       townMap.set(opportunity.town, current + 1);
       return townMap;
@@ -409,19 +429,26 @@ export function OpportunityBrowser({
             <div>
               <h2 className="text-sm font-bold text-primary">Map</h2>
               <p className="mt-1 text-xs text-slate-500">
-                Town pins for this page
+                Bergen County town pins
               </p>
             </div>
             <MapPin className="h-5 w-5 text-accent" />
           </div>
 
-          <div className="relative mt-3 aspect-[16/9] overflow-hidden rounded-2xl border border-slate-200 bg-gradient-to-br from-mint via-white to-[#dcecff] xl:aspect-[4/5]">
-            <div className="absolute inset-x-[18%] top-[8%] h-[84%] rounded-[45%] border border-primary/15 bg-white/55 shadow-inner" />
-            <div className="absolute left-[21%] top-[3%] h-[92%] w-[50%] rotate-6 rounded-[48%] border border-accent/40 bg-accent/10" />
-            {visibleTowns.map(([town, count]) => {
+          <div className="relative mt-3 aspect-[16/9] overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 xl:aspect-[4/5]">
+            <iframe
+              className="absolute inset-0 h-full w-full grayscale-[0.2]"
+              loading="lazy"
+              src="https://www.openstreetmap.org/export/embed.html?bbox=-74.08%2C40.82%2C-73.90%2C41.05&layer=mapnik"
+              title="Map of Bergen County volunteer towns"
+            />
+            <div className="absolute inset-0 bg-primary/5" />
+            {mappedTowns.map(([town, count]) => {
               const point = townCoordinates[town];
 
               if (!point) return null;
+
+              const position = mapPoint(point);
 
               return (
                 <a
@@ -431,7 +458,7 @@ export function OpportunityBrowser({
                     `${town} NJ`
                   )}`}
                   key={town}
-                  style={{ left: `${point.x}%`, top: `${point.y}%` }}
+                  style={{ left: `${position.x}%`, top: `${position.y}%` }}
                   target="_blank"
                 >
                   <span>{count}</span>
