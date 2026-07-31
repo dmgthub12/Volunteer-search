@@ -14,6 +14,7 @@ import {
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import type { VolunteerOpportunity } from "../../lib/opportunities";
+import type { Map as LeafletMap } from "leaflet";
 
 type Filters = {
   town: string;
@@ -31,13 +32,6 @@ const emptyFilters: Filters = {
   teenFriendly: false,
   weekend: false,
   duration: ""
-};
-
-const bergenBounds = {
-  north: 41.05,
-  south: 40.82,
-  east: -73.9,
-  west: -74.08
 };
 
 const townCoordinates: Record<string, { lat: number; lng: number }> = {
@@ -65,19 +59,6 @@ function includesText(value: string, query: string) {
   return value.toLowerCase().includes(query.toLowerCase());
 }
 
-function mapPoint({ lat, lng }: { lat: number; lng: number }) {
-  const x =
-    ((lng - bergenBounds.west) / (bergenBounds.east - bergenBounds.west)) * 100;
-  const y =
-    ((bergenBounds.north - lat) / (bergenBounds.north - bergenBounds.south)) *
-    100;
-
-  return {
-    x: Math.min(96, Math.max(4, x)),
-    y: Math.min(96, Math.max(4, y))
-  };
-}
-
 function getActiveFilterLabels(filters: Filters) {
   const labels: Array<{ key: keyof Filters; label: string }> = [];
 
@@ -91,6 +72,75 @@ function getActiveFilterLabels(filters: Filters) {
   if (filters.duration) labels.push({ key: "duration", label: filters.duration });
 
   return labels;
+}
+
+function BergenCountyMap({
+  towns
+}: {
+  towns: Array<[string, number]>;
+}) {
+  const mapElementId = "bergen-opportunity-map";
+
+  useEffect(() => {
+    let map: LeafletMap | null = null;
+
+    async function createMap() {
+      const L = await import("leaflet");
+      const mapElement = document.getElementById(mapElementId);
+
+      if (!mapElement) return;
+
+      mapElement.innerHTML = "";
+      map = L.map(mapElement, {
+        attributionControl: false,
+        scrollWheelZoom: false
+      });
+
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 18,
+        attribution: "&copy; OpenStreetMap contributors"
+      }).addTo(map);
+
+      const bounds: Array<[number, number]> = [];
+
+      towns.forEach(([town, count]) => {
+        const point = townCoordinates[town];
+
+        if (!point || !map) return;
+
+        const marker = L.marker([point.lat, point.lng], {
+          icon: L.divIcon({
+            className: "",
+            html: `<span class="leaflet-count-pin">${count}</span>`,
+            iconAnchor: [12, 12],
+            iconSize: [24, 24]
+          })
+        }).addTo(map);
+
+        marker.bindPopup(`<strong>${town}</strong><br>${count} opportunities`);
+        bounds.push([point.lat, point.lng]);
+      });
+
+      if (bounds.length > 0) {
+        map.fitBounds(bounds, { maxZoom: 11, padding: [28, 28] });
+      } else {
+        map.setView([40.96, -74.0], 10);
+      }
+    }
+
+    createMap();
+
+    return () => {
+      map?.remove();
+    };
+  }, [towns]);
+
+  return (
+    <div
+      className="relative mt-3 aspect-[16/9] overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 xl:aspect-[4/5]"
+      id={mapElementId}
+    />
+  );
 }
 
 export function OpportunityBrowser({
@@ -435,38 +485,7 @@ export function OpportunityBrowser({
             <MapPin className="h-5 w-5 text-accent" />
           </div>
 
-          <div className="relative mt-3 aspect-[16/9] overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 xl:aspect-[4/5]">
-            <iframe
-              className="absolute inset-0 h-full w-full grayscale-[0.2]"
-              loading="lazy"
-              src="https://www.openstreetmap.org/export/embed.html?bbox=-74.08%2C40.82%2C-73.90%2C41.05&layer=mapnik"
-              title="Map of Bergen County volunteer towns"
-            />
-            <div className="absolute inset-0 bg-primary/5" />
-            {mappedTowns.map(([town, count]) => {
-              const point = townCoordinates[town];
-
-              if (!point) return null;
-
-              const position = mapPoint(point);
-
-              return (
-                <a
-                  aria-label={`${town}, ${count} opportunities`}
-                  className="map-pin group/pin"
-                  href={`https://www.google.com/maps/search/${encodeURIComponent(
-                    `${town} NJ`
-                  )}`}
-                  key={town}
-                  style={{ left: `${position.x}%`, top: `${position.y}%` }}
-                  target="_blank"
-                >
-                  <span>{count}</span>
-                  <span className="map-label">{town}</span>
-                </a>
-              );
-            })}
-          </div>
+          <BergenCountyMap towns={mappedTowns} />
 
           <div className="mt-3 max-h-72 space-y-1.5 overflow-auto pr-1">
             {visibleOpportunities.slice(0, 18).map((opportunity) => (
