@@ -48,7 +48,13 @@ To view analytics privately, add your service-role key to `.env.local` on your c
 SUPABASE_SERVICE_ROLE_KEY=your-supabase-service-role-key
 ```
 
-Do not add `SUPABASE_SERVICE_ROLE_KEY` to Vercel, GitHub, or any `NEXT_PUBLIC_` variable.
+Supabase also supports newer secret keys that start with `sb_secret_...`. If you use one of those, you can either paste it into `SUPABASE_SERVICE_ROLE_KEY` or use this name instead:
+
+```bash
+SUPABASE_SECRET_KEY=your-supabase-secret-key
+```
+
+Do not add `SUPABASE_SERVICE_ROLE_KEY` or `SUPABASE_SECRET_KEY` to Vercel, GitHub, or any `NEXT_PUBLIC_` variable.
 
 Start the local dashboard:
 

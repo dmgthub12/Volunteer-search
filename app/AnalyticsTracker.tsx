@@ -46,15 +46,20 @@ function sendEvent(eventType: string, element?: Element) {
 
   const endpoint = `${supabaseUrl}/rest/v1/site_events`;
   const body = JSON.stringify(trackingPayload(eventType, element));
+  const usesLegacyJwt = supabaseKey.split(".").length === 3;
+  const headers: Record<string, string> = {
+    apikey: supabaseKey,
+    "Content-Type": "application/json",
+    Prefer: "return=minimal"
+  };
+
+  if (usesLegacyJwt) {
+    headers.Authorization = `Bearer ${supabaseKey}`;
+  }
 
   fetch(endpoint, {
     body,
-    headers: {
-      apikey: supabaseKey,
-      Authorization: `Bearer ${supabaseKey}`,
-      "Content-Type": "application/json",
-      Prefer: "return=minimal"
-    },
+    headers,
     keepalive: true,
     method: "POST"
   }).catch(() => {});

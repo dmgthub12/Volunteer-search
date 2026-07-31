@@ -24,7 +24,8 @@ loadLocalEnv();
 
 const supabaseUrl =
   process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
-const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const serviceRoleKey =
+  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SECRET_KEY;
 const port = Number(process.env.ANALYTICS_PORT || 4310);
 
 function escapeHtml(value) {
@@ -60,11 +61,17 @@ async function fetchEvents() {
   endpoint.searchParams.set("order", "created_at.desc");
   endpoint.searchParams.set("limit", "250");
 
+  const usesLegacyJwt = serviceRoleKey.split(".").length === 3;
+  const headers = {
+    apikey: serviceRoleKey
+  };
+
+  if (usesLegacyJwt) {
+    headers.Authorization = `Bearer ${serviceRoleKey}`;
+  }
+
   const response = await fetch(endpoint, {
-    headers: {
-      apikey: serviceRoleKey,
-      Authorization: `Bearer ${serviceRoleKey}`
-    }
+    headers
   });
 
   if (!response.ok) {
@@ -94,8 +101,8 @@ function renderSetup(error) {
     <section class="card">
       <h2>Add this to <code>.env.local</code></h2>
       <pre>NEXT_PUBLIC_SUPABASE_URL=https://your-project-ref.supabase.co
-SUPABASE_SERVICE_ROLE_KEY=your-service-role-key</pre>
-      <p>Then run <code>pnpm analytics</code> again. Keep the service-role key private and only on your computer.</p>
+SUPABASE_SERVICE_ROLE_KEY=your-service-role-or-secret-key</pre>
+      <p>Then run the dashboard again. Keep the service-role or secret key private and only on your computer.</p>
     </section>
   </main>
 </body>
