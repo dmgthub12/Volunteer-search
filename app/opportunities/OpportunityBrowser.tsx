@@ -124,31 +124,37 @@ export function OpportunityBrowser({
       opportunity.teenFriendly ? "Teen Friendly" : null,
       opportunity.weekend ? "Weekend" : null,
       opportunity.duration.includes("One-time") ? "One-Time" : null,
-      opportunity.duration.includes("Ongoing") ? "Ongoing" : null,
-      opportunity.needsVerification ? "Needs Verification" : null
+      opportunity.duration.includes("Ongoing") ? "Ongoing" : null
     ].filter(Boolean) as string[];
 
-    return Array.from(new Set([...tags, ...opportunity.tags])).slice(0, 3);
+    return Array.from(new Set([...tags, ...opportunity.tags])).slice(0, 2);
   }
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[320px_1fr]">
-      <aside className="soft-card h-fit p-5 lg:sticky lg:top-28">
-        <div className="mb-5">
-          <p className="text-lg font-bold text-primary">Filters</p>
-          <p className="mt-1 text-sm text-slate-500">
-            Refine the list without losing your place.
-          </p>
+    <section>
+      <div className="soft-card p-3 sm:p-4">
+        <label className="sr-only" htmlFor="opportunity-search">
+          Search volunteer opportunities, towns, or categories
+        </label>
+        <div className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 shadow-sm ring-accent/20 transition focus-within:border-accent focus-within:ring-4">
+          <Search className="h-5 w-5 shrink-0 text-slate-400" />
+          <input
+            className="min-h-12 w-full bg-transparent text-sm text-slate-900 outline-none placeholder:text-slate-400"
+            id="opportunity-search"
+            placeholder="Search volunteer opportunities, towns, or categories"
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+          />
         </div>
 
-        <div className="space-y-4">
-          <label className="field-label">
+        <div className="mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-6">
+          <label className="compact-field lg:col-span-1">
             <span className="flex items-center gap-2">
-              <MapPin className="h-4 w-4 text-accent" />
+              <MapPin className="h-3.5 w-3.5 text-accent" />
               Town
             </span>
             <select
-              className="field-control"
+              className="compact-control"
               value={filters.town}
               onChange={(event) => updateFilter("town", event.target.value)}
             >
@@ -161,13 +167,13 @@ export function OpportunityBrowser({
             </select>
           </label>
 
-          <label className="field-label">
+          <label className="compact-field lg:col-span-1">
             <span className="flex items-center gap-2">
-              <Tag className="h-4 w-4 text-accent" />
+              <Tag className="h-3.5 w-3.5 text-accent" />
               Category
             </span>
             <select
-              className="field-control"
+              className="compact-control"
               value={filters.category}
               onChange={(event) => updateFilter("category", event.target.value)}
             >
@@ -180,13 +186,13 @@ export function OpportunityBrowser({
             </select>
           </label>
 
-          <label className="field-label">
+          <label className="compact-field lg:col-span-1">
             <span className="flex items-center gap-2">
-              <UserRound className="h-4 w-4 text-accent" />
-              Minimum Age
+              <UserRound className="h-3.5 w-3.5 text-accent" />
+              Age
             </span>
             <select
-              className="field-control"
+              className="compact-control"
               value={filters.minimumAge}
               onChange={(event) => updateFilter("minimumAge", event.target.value)}
             >
@@ -199,7 +205,26 @@ export function OpportunityBrowser({
             </select>
           </label>
 
-          <label className="toggle-row">
+          <label className="compact-field lg:col-span-1">
+            <span className="flex items-center gap-2">
+              <Clock3 className="h-3.5 w-3.5 text-accent" />
+              Commitment
+            </span>
+            <select
+              className="compact-control"
+              value={filters.duration}
+              onChange={(event) => updateFilter("duration", event.target.value)}
+            >
+              <option value="">Any</option>
+              <option value="One-time">One-time</option>
+              <option value="Ongoing">Ongoing</option>
+              <option value="One-time and ongoing">Both</option>
+              <option value="Contact organization">Contact</option>
+            </select>
+          </label>
+
+          <div className="grid grid-cols-2 gap-2 sm:col-span-2 lg:col-span-2">
+            <label className="compact-toggle">
             <input
               checked={filters.teenFriendly}
               type="checkbox"
@@ -207,54 +232,19 @@ export function OpportunityBrowser({
                 updateFilter("teenFriendly", event.target.checked)
               }
             />
-            <UserRound className="h-4 w-4 text-accent" />
-            Teen friendly
-          </label>
+              <UserRound className="h-3.5 w-3.5 text-accent" />
+              Teen
+            </label>
 
-          <label className="toggle-row">
+            <label className="compact-toggle">
             <input
               checked={filters.weekend}
               type="checkbox"
               onChange={(event) => updateFilter("weekend", event.target.checked)}
             />
-            <CalendarDays className="h-4 w-4 text-accent" />
-            Weekend
-          </label>
-
-          <label className="field-label">
-            <span className="flex items-center gap-2">
-              <Clock3 className="h-4 w-4 text-accent" />
-              Commitment
-            </span>
-            <select
-              className="field-control"
-              value={filters.duration}
-              onChange={(event) => updateFilter("duration", event.target.value)}
-            >
-              <option value="">Any commitment</option>
-              <option value="One-time">One-time</option>
-              <option value="Ongoing">Ongoing</option>
-              <option value="One-time and ongoing">One-time and ongoing</option>
-              <option value="Contact organization">Contact organization</option>
-            </select>
-          </label>
-        </div>
-      </aside>
-
-      <section>
-        <div className="soft-card p-4 sm:p-5">
-          <label className="sr-only" htmlFor="opportunity-search">
-            Search volunteer opportunities, towns, or categories
-          </label>
-          <div className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 shadow-sm ring-accent/20 transition focus-within:border-accent focus-within:ring-4">
-            <Search className="h-5 w-5 shrink-0 text-slate-400" />
-            <input
-              className="min-h-14 w-full bg-transparent text-base text-slate-900 outline-none placeholder:text-slate-400"
-              id="opportunity-search"
-              placeholder="Search volunteer opportunities, towns, or categories"
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-            />
+              <CalendarDays className="h-3.5 w-3.5 text-accent" />
+              Weekend
+            </label>
           </div>
         </div>
 
@@ -280,10 +270,11 @@ export function OpportunityBrowser({
             </button>
           </div>
         ) : null}
+      </div>
 
-        <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        <div className="mt-5 grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-7">
           {filteredOpportunities.length === 0 ? (
-            <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-8 text-center text-slate-600 sm:col-span-2 xl:col-span-3">
+            <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-8 text-center text-slate-600 sm:col-span-2 md:col-span-3 lg:col-span-4 xl:col-span-5 2xl:col-span-7">
               No opportunities found. Add the volunteer file information to{" "}
               <code className="rounded bg-lightBackground px-2 py-1">
                 lib/opportunities.ts
@@ -293,52 +284,51 @@ export function OpportunityBrowser({
           ) : (
             filteredOpportunities.map((opportunity) => (
               <Link
-                className="group block h-full rounded-2xl border border-slate-200/80 bg-white p-4 shadow-soft transition duration-200 hover:-translate-y-1 hover:border-accent/60 hover:shadow-lift"
+                className="group block h-full rounded-2xl border border-slate-200/80 bg-white p-3 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-accent/60 hover:shadow-soft"
                 href={`/opportunities/${opportunity.id}`}
                 key={opportunity.id}
               >
-                <article className="flex min-h-[255px] flex-col">
+                <article className="flex min-h-[172px] flex-col">
                   <div>
                     <div className="flex items-start justify-between gap-2">
-                      <h2 className="text-lg font-bold leading-snug text-primary">
+                      <h2 className="line-clamp-2 text-sm font-bold leading-snug text-primary">
                         {opportunity.organization}
                       </h2>
                       {opportunity.needsVerification ? (
-                        <span className="shrink-0 rounded-full bg-amber-50 px-2 py-1 text-[11px] font-bold text-amber-700">
+                        <span className="shrink-0 rounded-full bg-amber-50 px-1.5 py-0.5 text-[10px] font-bold text-amber-700">
                           Verify
                         </span>
                       ) : null}
                     </div>
-                    <p className="mt-2 flex flex-wrap items-center gap-2 text-xs font-semibold uppercase tracking-normal text-slate-500">
+                    <p className="mt-2 flex flex-wrap items-center gap-1.5 text-[11px] font-semibold uppercase tracking-normal text-slate-500">
                       <span className="inline-flex items-center gap-1">
-                        <MapPin className="h-3.5 w-3.5" />
+                        <MapPin className="h-3 w-3" />
                         {opportunity.town}
                       </span>
                       <span>&bull;</span>
                       <span>{opportunity.category}</span>
                     </p>
-                    <p className="opportunity-description mt-3 text-sm leading-6 text-slate-700">
+                    <p className="opportunity-description mt-2 text-xs leading-5 text-slate-700">
                       {opportunity.description}
                     </p>
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      <span className="meta-pill">{opportunity.ageDisplay}</span>
+                    <div className="mt-3 flex flex-wrap gap-1.5">
+                      <span className="compact-pill">{opportunity.ageDisplay}</span>
                       {usefulTags(opportunity).map((tag) => (
-                        <span className="meta-pill" key={tag}>
+                        <span className="compact-pill" key={tag}>
                           {tag}
                         </span>
                       ))}
                     </div>
                   </div>
-                  <span className="mt-auto inline-flex items-center gap-2 pt-5 text-sm font-bold text-primary">
-                    View Details
-                    <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+                  <span className="mt-auto inline-flex items-center gap-1.5 pt-3 text-xs font-bold text-primary">
+                    Details
+                    <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-1" />
                   </span>
                 </article>
               </Link>
             ))
           )}
         </div>
-      </section>
-    </div>
+    </section>
   );
 }

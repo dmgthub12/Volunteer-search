@@ -11,7 +11,7 @@ export default async function OpportunitiesPage() {
   ).sort();
 
   return (
-    <main className="mx-auto max-w-6xl px-5 py-10 sm:px-6 lg:px-8">
+    <main className="mx-auto max-w-[1800px] px-5 py-8 sm:px-6 lg:px-8">
       <section className="mb-8">
         <p className="text-sm font-semibold text-accent">
           Volunteer directory
