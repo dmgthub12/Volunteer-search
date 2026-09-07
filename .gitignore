@@ -9,3 +9,7 @@ yarn-error.log*
 pnpm-debug.log*
 tsconfig.tsbuildinfo
 outputs
+logs
+work
+*.out.log
+*.err.log

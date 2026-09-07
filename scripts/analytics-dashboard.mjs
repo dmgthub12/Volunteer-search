@@ -121,7 +121,7 @@ function renderDashboard(events) {
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta http-equiv="refresh" content="15" />
+  <meta http-equiv="refresh" content="5" />
   <title>Bergen Volunteer Connect Analytics</title>
   <style>${styles()}</style>
 </head>
@@ -130,7 +130,7 @@ function renderDashboard(events) {
     <section class="hero">
       <p class="eyebrow">Private dashboard</p>
       <h1>Bergen Volunteer Connect Analytics</h1>
-      <p>Auto-refreshes every 15 seconds. This page only runs on your computer.</p>
+      <p>Auto-refreshes every 5 seconds. This page only runs on your computer.</p>
     </section>
 
     <section class="stats">
